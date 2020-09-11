@@ -1,7 +1,7 @@
 {
   "name": "typescript-web-application",
   "version": "0.0.0",
-  "description": "Template TypeScript web application",
+  "description": "A TypeScript web application template that can be used as a seed for new projects",
   "main": "index.js",
   "type": "module",
   "scripts": {
