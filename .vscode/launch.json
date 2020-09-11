@@ -1,0 +1,49 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Src",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "watch:src"]
+    },
+    {
+      "name": "Assets",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "watch:assets"]
+    },
+    {
+      "name": "Server",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "debug"]
+    },
+    {
+      "name": "Client",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5000",
+      "webRoot": "${workspaceRoot}/dist/debug"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug",
+      "configurations": ["Src", "Assets", "Server", "Client"],
+      "stopAll": true,
+      "preLaunchTask": "npm: build",
+      "presentation": {
+        "hidden": false,
+        "group": "",
+        "order": 1
+      }
+    }
+  ]
+}
