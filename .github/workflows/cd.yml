@@ -1,0 +1,44 @@
+name: Continuous Deployment
+
+on: [push, pull_request]
+
+jobs:
+  cd:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Setup
+        run: |
+          npm install
+      - name: Build
+        run: |
+          npm run build
+      - name: Lint
+        run: |
+          npm run lint
+      - name: Test
+        run: |
+          npm run test
+      - name: Publish as 'unstable'
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
+          docker build --no-cache -t $DOCKER_USERNAME/$REPO_NAME:$GITHUB_SHA -t $DOCKER_USERNAME/$REPO_NAME:unstable .
+          docker push $DOCKER_USERNAME/$REPO_NAME
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+      - name: Publish as 'stable'
+        if: contains(github.ref, 'refs/tags/v')
+        run: |
+          docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
+          docker build --no-cache -t $DOCKER_USERNAME/$REPO_NAME:${GITHUB_REF/refs\/tags\/v/} -t $DOCKER_USERNAME/$REPO_NAME:stable -t $DOCKER_USERNAME/$REPO_NAME:latest .
+          docker push $DOCKER_USERNAME/$REPO_NAME
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
