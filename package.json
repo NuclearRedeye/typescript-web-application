@@ -1,0 +1,57 @@
+{
+  "name": "typescript-web-application",
+  "version": "0.0.0",
+  "description": "Template TypeScript web application",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc",
+    "postbuild": "rollup --config",
+    "watch:src": "tsc --watch",
+    "watch:assets": "nodemon -w './src' -e 'html,css,png,jpg' -x 'rollup --config'",
+    "debug": "live-server --port=5000 --no-browser ./dist/debug/",
+    "lint": "eslint ./src --ext .js,.ts",
+    "test": "jest",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NuclearRedeye/NAME.git"
+  },
+  "author": "NuclearRedeye",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NuclearRedeye/NAME/issues"
+  },
+  "homepage": "https://github.com/NuclearRedeye/NAME#readme",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "@nuclearredeye/eslint-config": "1.1.0",
+    "@types/jest": "^26.0.13",
+    "eslint": "^6.8.0",
+    "husky": "^3.0.8",
+    "jest": "^26.4.2",
+    "live-server": "^1.2.1",
+    "nodemon": "^2.0.4",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.1.0",
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-terser": "^5.3.0",
+    "standard-version": "^8.0.1",
+    "ts-jest": "^26.3.0",
+    "typescript": "^3.9.7"
+  }
+}
