@@ -8,6 +8,8 @@
     "prebuild": "rimraf dist",
     "build": "tsc",
     "postbuild": "rollup --config",
+    "clean": "rimraf dist",
+    "distclean": "rimraf dist node_modules",
     "watch:src": "tsc --watch",
     "watch:assets": "nodemon -w './src' -e 'html,css,png,jpg' -x 'rollup --config'",
     "debug": "live-server --port=5000 --no-browser ./dist/debug/",
@@ -52,6 +54,6 @@
     "rollup-plugin-terser": "^5.3.0",
     "standard-version": "^8.0.1",
     "ts-jest": "^26.3.0",
-    "typescript": "^3.9.7"
+    "typescript": "^4.0.2"
   }
 }
