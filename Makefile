@@ -7,9 +7,10 @@ PORT ?= 8080
 DOCKER := docker run --rm -w=/$(PROJECT) -v $(CURDIR):/$(PROJECT):rw
 
 # Files that when changed should trigger a rebuild.
-TS     := $(shell find ./src/ -type f -name *.ts)
-SASS   := $(shell find ./src/ -type f -name *.scss)
-HTML   := $(shell find ./src/ -type f -name *.html)
+TS     := $(shell find ./src/ts -type f -name *.ts)
+SASS   := $(shell find ./src/scss -type f -name *.scss)
+HTML   := $(shell find ./src/html -type f -name *.html)
+ASSETS := $(shell find ./src/assets -type f)
 
 # Targets that don't result in output of the same name.
 .PHONY: clean \
@@ -44,14 +45,15 @@ out/debug out/release:
 	@mkdir -p $(CURDIR)/$@
 
 # Target that creates the specified HTML file by copying it from the src directory.
-%.html:
+out/debug/index.html out/release/index.html: $(HTML)
 	@echo "Creating $@..."
 	@cp $(CURDIR)/src/html/$(@F) $@
 
 # Target that creates the assets by copying them from the src directory.
-out/debug/assets out/release/assets:
+out/debug/assets out/release/assets: $(ASSETS)
 	@echo "Creating $@..."
 	@cp -r $(CURDIR)/src/assets/ $@
+	@touch $@
 
 # Target that compiles TypeScript to JavaScript.
 out/debug/index.js: node_modules out/debug tsconfig.json $(TS)
