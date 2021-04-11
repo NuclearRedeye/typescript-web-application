@@ -1,3 +1,5 @@
-node_modules
-dist
-package-lock.json
+# By default, ignore everything...
+/*
+
+# Except the below...
+!/src

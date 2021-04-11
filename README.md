@@ -1,27 +1,33 @@
 # TypeScript Web Application
 
-A TypeScript web application template that can be used as a seed for new projects.
+A template TypeScript Web Application that can be used to seed a new project.
 
-# Getting Started
+## Prerequisites
+
+* You have a Linux or OSX machine. Windows should be supported via WSL 2 but has not been tested.
+* You have installed a recent version of [GNU Make](https://www.gnu.org/software/make/).
+* You have installed a recent version of [Docker](https://www.docker.com/).
+
+## Quick Start
 
 You can get up and running quickly with...
 
 ```
-npm install
-npm start
-```
-Then open http://localhost:5000 in your browser.
-
-Or, if you are using [Visual Studio Code](https://code.visualstudio.com/) then the included config means you can simply hit F5 to get going.
-
-# Docker
-
-You can also package the entire application in a docker container, ready to deploy.
-
-```
-npm run build
-docker build . -t typescript-web-application:dev
-docker run -p 8080:80 typescript-web-application:dev
+make
 ```
 
 Then open http://localhost:8080 in your browser.
+
+You can also package the application into a docker container...
+
+```
+make release
+docker build -t typescript-web-application:local .
+docker run -p 8080:80 typescript-web-application:local
+```
+
+And again, then open http://localhost:8080 in your browser.
+
+## License
+
+Licensed under [MIT](https://choosealicense.com/licenses/mit/).

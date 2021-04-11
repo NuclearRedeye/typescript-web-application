@@ -1,0 +1,12 @@
+version: 1
+update_configs:
+  - package_manager: "javascript"
+    directory: "/"
+    update_schedule: "live"
+    commit_message:
+      prefix: "chore(deps)"
+  - package_manager: "docker"
+    directory: "/"
+    update_schedule: "weekly"
+    commit_message:
+      prefix: "chore(deps)"
