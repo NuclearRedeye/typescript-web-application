@@ -99,4 +99,5 @@ release: out/release out/release/index.html out/release/index.css out/release/in
 
 # Target that builds and runs a debug instance of the project.
 start: debug
-	@docker run --rm --name $(PROJECT) -p $(PORT):80 -v $(CURDIR)/out/debug:/usr/share/nginx/html/:ro nginx:alpine
+	@echo "Starting '$(PROJECT)' on 'http://localhost:$(PORT)'..."
+	@docker run --rm --name $(PROJECT) -p $(PORT):80 -e NGINX_ENTRYPOINT_QUIET_LOGS=1 -v $(CURDIR)/out/debug:/usr/share/nginx/html/:ro nginx:alpine
