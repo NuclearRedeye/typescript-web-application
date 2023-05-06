@@ -1,6 +1,6 @@
 export default {
   collectCoverage: true,
-  coverageDirectory: "./out/coverage",
+  coverageDirectory: "./dist/coverage",
   coverageThreshold: {
     global: {
       branches: 100,

@@ -1,6 +1,6 @@
 
 PROJECT := $(notdir $(CURDIR))
-NODE_VERSION ?= fermium
+NODE_VERSION ?= hydrogen
 PORT ?= 8080
 
 # Build commands
@@ -23,7 +23,7 @@ ASSETS := $(shell find ./src/assets -type f)
         start
 
 # When no target is specified, the default target to run.
-.DEFAULT_GOAL := start
+.DEFAULT_GOAL := debug
 
 # Target that cleans build output and local dependencies.
 distclean: clean
@@ -36,68 +36,68 @@ clean:
 # Target to install Node.js dependencies.
 node_modules: package.json
 	@echo "Installing dependencies..."
-	@$(DOCKER) node:$(NODE_VERSION) npm install
+	@npm install
 	@touch node_modules
 
 # Target to create the output directories.
-out/debug out/release:
+dist/debug dist/release:
 	@echo "Creating $@..."
 	@mkdir -p $(CURDIR)/$@
 
 # Target that creates the specified HTML file by copying it from the src directory.
-out/debug/index.html out/release/index.html: $(HTML)
+dist/debug/index.html dist/release/index.html: $(HTML)
 	@echo "Creating $@..."
 	@cp $(CURDIR)/src/html/$(@F) $@
 
 # Target that creates the assets by copying them from the src directory.
-out/debug/assets out/release/assets: $(ASSETS)
+dist/debug/assets dist/release/assets: $(ASSETS)
 	@echo "Creating $@..."
 	@cp -r $(CURDIR)/src/assets/ $@
 	@touch $@
 
 # Target that compiles TypeScript to JavaScript.
-out/debug/index.js: node_modules out/debug tsconfig.json $(TS)
+dist/debug/index.js: node_modules dist/debug tsconfig.json $(TS)
 	@echo "Creating $@..."
-	@$(DOCKER) node:$(NODE_VERSION) npx tsc
+	@npx tsc
 
 # Target that compiles SCSS to CSS.
-out/debug/index.css: node_modules out/debug $(SASS)
+dist/debug/index.css: node_modules dist/debug $(SASS)
 	@echo "Creating $@..."
-	@$(DOCKER) node:$(NODE_VERSION) npx sass ./src/scss/index.scss $@
+	@npx sass ./src/scss/index.scss $@
 
 # Target that bundles, treeshakes and minifies the JavaScript.
-out/release/index.js: out/release out/debug/index.js
+dist/release/index.js: dist/release dist/debug/index.js
 	@echo "Creating $@..."
-	@$(DOCKER) node:$(NODE_VERSION) npx rollup ./out/debug/index.js --file $@
-	@$(DOCKER) node:$(NODE_VERSION) npx terser -c -m -o $@ $@
+	@npx rollup ./dist/debug/index.js --file $@
+	@npx terser -c -m -o $@ $@
 
 # Target that compiles SCSS to CSS.
-out/release/index.css: node_modules out/release $(SASS)
+dist/release/index.css: node_modules dist/release $(SASS)
 	@echo "Creating $@..."
-	@$(DOCKER) node:$(NODE_VERSION) npx sass --no-source-map ./src/scss/index.scss $@
+	@npx sass --no-source-map ./src/scss/index.scss $@
 
 # Target that checks the code for style/formating issues.
 format: node_modules
 	@echo "Running style checks..."
-	@$(DOCKER) node:$(NODE_VERSION) npx prettier --check .
+	@npx prettier --check .
 
 # Target that lints the code for errors.
 lint: node_modules
 	@echo "Running linter..."
-	@$(DOCKER) node:$(NODE_VERSION) npx eslint ./src --ext .js,.ts
+	@npx eslint ./src --ext .js,.ts
 
 # Target to run all unit tests.
 test: node_modules
 	@echo "Running unit tests..."
-	@$(DOCKER) node:$(NODE_VERSION) npx jest
+	@npx jest
 
 # Target that builds a debug/development version of the app
-debug: out/debug out/debug/index.html out/debug/index.css out/debug/index.js out/debug/assets
+debug: dist/debug dist/debug/index.html dist/debug/index.css dist/debug/index.js dist/debug/assets
 
 # Target that builds a release version of the app
-release: out/release out/release/index.html out/release/index.css out/release/index.js out/release/assets
+release: dist/release dist/release/index.html dist/release/index.css dist/release/index.js dist/release/assets
 
 # Target that builds and runs a debug instance of the project.
-start: debug
+dev: debug
 	@echo "Starting '$(PROJECT)' on 'http://localhost:$(PORT)'..."
-	@docker run --rm --name $(PROJECT) -p $(PORT):80 -e NGINX_ENTRYPOINT_QUIET_LOGS=1 -v $(CURDIR)/out/debug:/usr/share/nginx/html/:ro nginx:alpine
+	@docker run --rm --name $(PROJECT) -p $(PORT):80 -e NGINX_ENTRYPOINT_QUIET_LOGS=1 -v $(CURDIR)/dist/debug:/usr/share/nginx/html/:ro nginx:alpine
