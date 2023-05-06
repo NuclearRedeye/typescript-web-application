@@ -1,0 +1,15 @@
+name: Check
+
+on:
+  workflow_call:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Formatting
+        run: |
+          make format
+      - name: Lint
+        run: |
+          make lint

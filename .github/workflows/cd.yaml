@@ -1,0 +1,21 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+
+jobs:
+  setup:
+    uses: ./.github/workflows/setup.yml
+  build:
+    uses: ./.github/workflows/build.yml
+  check:
+    uses: ./.github/workflows/check.yml
+  test:
+    uses: ./.github/workflows/test.yml
+  publish:
+    uses: ./.github/workflows/publish.yml
+    secrets: inherit

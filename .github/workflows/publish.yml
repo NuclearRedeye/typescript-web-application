@@ -1,33 +1,13 @@
-name: Continuous Deployment
+name: Publish
 
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - v*
-  pull_request:
+  workflow_call:
 
 jobs:
-  cd:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Checking code for styling issues
-        run: |
-          make format
-      - name: Checking code for linting issues
-        run: |
-          make lint
-      - name: Checking unit tests pass
-        run: |
-          make test
-      - name: Checking 'debug' code builds
-        run: |
-          sudo make debug
-      - name: Checking 'release' code builds
-        run: |
-          sudo make release
       - name: Publishing 'unstable' release to https://hub.docker.com
         if: github.ref == 'refs/heads/master'
         run: |

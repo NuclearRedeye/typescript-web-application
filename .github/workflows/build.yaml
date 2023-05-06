@@ -1,0 +1,15 @@
+name: Build
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build 'debug'
+        run: |
+          make debug
+      - name: Build 'release'
+        run: |
+          make release
