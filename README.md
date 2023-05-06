@@ -13,7 +13,7 @@ A template TypeScript Web Application that can be used to seed a new project.
 You can get up and running quickly with...
 
 ```
-make
+make dev
 ```
 
 Then open http://localhost:8080 in your browser.
@@ -21,7 +21,6 @@ Then open http://localhost:8080 in your browser.
 You can also package the application into a docker container...
 
 ```
-make release
 docker build -t typescript-web-application:local .
 docker run -p 8080:80 typescript-web-application:local
 ```
