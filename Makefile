@@ -31,7 +31,7 @@ distclean: clean
 
 # Target that cleans build output
 clean:
-	@rm -rf out
+	@rm -rf dist
 
 # Target to install Node.js dependencies.
 node_modules: package.json
