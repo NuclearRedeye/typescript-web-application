@@ -10,10 +10,10 @@ on:
 
 jobs:
   setup:
+    uses: ./.github/workflows/setup.yaml
+  build:
     uses: ./.github/workflows/build.yaml
   check:
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/check.yaml
   test:
     uses: ./.github/workflows/test.yaml
-  build:
-    uses: ./.github/workflows/check.yaml
