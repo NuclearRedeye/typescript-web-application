@@ -1,4 +1,4 @@
-name: Build
+name: Build, Check and Test
 
 on:
   workflow_call:
@@ -14,18 +14,18 @@ jobs:
       - name: Installing dependencies
         run: |
           npm install
-      - name: Build 'debug'
+      - name: Can build 'debug' target
         run: |
           make debug
-      - name: Build 'release'
+      - name: Can build 'release' target
         run: |
           make release
-      - name: Check formatting
+      - name: Adheres to formatting standards
         run: |
           make format
-      - name: Lint
+      - name: Adheres to coding standards
         run: |
           make lint
-      - name: Run 'unit' tests
+      - name: Passes automated testing
         run: |
           make test
