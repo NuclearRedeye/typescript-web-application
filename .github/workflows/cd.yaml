@@ -9,13 +9,13 @@ on:
 
 jobs:
   setup:
-    uses: ./.github/workflows/setup.yml
+    uses: ./.github/workflows/setup.yaml
   build:
-    uses: ./.github/workflows/build.yml
+    uses: ./.github/workflows/build.yaml
   check:
-    uses: ./.github/workflows/check.yml
+    uses: ./.github/workflows/check.yaml
   test:
-    uses: ./.github/workflows/test.yml
+    uses: ./.github/workflows/test.yaml
   publish:
-    uses: ./.github/workflows/publish.yml
+    uses: ./.github/workflows/publish.yaml
     secrets: inherit
