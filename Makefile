@@ -84,7 +84,7 @@ format: node_modules
 # Target that lints the code for errors.
 lint: node_modules
 	@echo "Running linter..."
-	@npx eslint ./src --ext .js,.ts
+	@npx eslint ./src
 
 # Target to run all unit tests.
 test: node_modules
