@@ -1,0 +1,31 @@
+name: Build, Check and Test
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/hydrogen'
+      - name: Installing dependencies
+        run: |
+          npm install
+      - name: Can build 'debug' target
+        run: |
+          make debug
+      - name: Can build 'release' target
+        run: |
+          make release
+      - name: Adheres to formatting standards
+        run: |
+          make format
+      - name: Adheres to coding standards
+        run: |
+          make lint
+      - name: Passes automated testing
+        run: |
+          make test

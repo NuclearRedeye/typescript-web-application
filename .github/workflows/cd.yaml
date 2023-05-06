@@ -1,0 +1,16 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yaml
+  publish:
+    uses: ./.github/workflows/publish.yaml
+    needs: build
+    secrets: inherit
