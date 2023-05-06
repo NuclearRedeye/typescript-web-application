@@ -7,9 +7,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/hydrogen'
+      - name: Installing dependencies
+        run: |
+          npm install
       - name: Build 'debug'
         run: |
           make debug
       - name: Build 'release'
         run: |
           make release
+      - name: Check formatting
+        run: |
+          make format
+      - name: Lint
+        run: |
+          make lint
+      - name: Run 'unit' tests
+        run: |
+          make test
