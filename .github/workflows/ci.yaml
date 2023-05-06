@@ -13,7 +13,10 @@ jobs:
     uses: ./.github/workflows/setup.yaml
   build:
     uses: ./.github/workflows/build.yaml
+    needs: setup
   check:
     uses: ./.github/workflows/check.yaml
+    needs: setup
   test:
     uses: ./.github/workflows/test.yaml
+    needs: setup
