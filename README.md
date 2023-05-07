@@ -4,9 +4,10 @@ A template TypeScript Web Application that can be used to seed a new project.
 
 ## Prerequisites
 
-* You have a Linux or OSX machine. Windows should be supported via WSL 2 but has not been tested.
-* You have installed a recent version of [GNU Make](https://www.gnu.org/software/make/).
-* You have installed a recent version of [Docker](https://www.docker.com/).
+* A machine running Linux or OSX (Windows should be supported via WSL 2 but has not been tested).
+* A recent version of [GNU Make](https://www.gnu.org/software/make/).
+* A recent version of [Node.js](https://nodejs.org/en).
+* A recent version of [Docker](https://www.docker.com/).
 
 ## Quick Start
 
