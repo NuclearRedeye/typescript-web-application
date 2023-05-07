@@ -97,6 +97,11 @@ debug: dist/debug dist/debug/index.html dist/debug/index.css dist/debug/index.js
 # Target that builds a release version of the app
 release: dist/release dist/release/index.html dist/release/index.css dist/release/index.js dist/release/assets
 
+# Target that 'watches' and rebuilds automatically
+watch:
+	@echo "Watching for changes..."
+	@while true; do $(MAKE) -q || $(MAKE); sleep 1; done
+
 # Target that builds and runs a debug instance of the project.
 dev: debug
 	@echo "Starting '$(PROJECT)' on 'http://localhost:$(PORT)'..."
