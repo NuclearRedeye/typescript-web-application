@@ -1,6 +1,6 @@
 
 PROJECT := $(notdir $(CURDIR))
-NODE_VERSION ?= hydrogen
+NODE_VERSION ?= iron
 NGINX_VERSION ?= alpine
 PORT ?= 8080
 
@@ -106,4 +106,4 @@ watch:
 # Target that builds and runs a debug instance of the project.
 dev: debug
 	@echo "Starting '$(PROJECT)' on 'http://localhost:$(PORT)'..."
-	@docker run --rm --name $(PROJECT) -p $(PORT):80 -e NGINX_ENTRYPOINT_QUIET_LOGS=1 -v $(CURDIR)/dist/debug:/usr/share/nginx/html/:ro nginx:$(NGINX_VERSION)
+	@docker run --rm --name $(PROJECT) -p $(PORT):80 -e NGINX_ENTRYPOINT_QUIET_LOGS=1 -v '$(CURDIR)/.nginx/nginx.conf:/etc/nginx/nginx.conf:ro' -v $(CURDIR)/dist/debug:/usr/share/nginx/html/:ro nginx:$(NGINX_VERSION)
