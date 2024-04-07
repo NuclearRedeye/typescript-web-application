@@ -1,4 +1,4 @@
-FROM node:hydrogen as build
+FROM node:iron as build
 
 WORKDIR /app
 
