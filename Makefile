@@ -80,12 +80,12 @@ dist/release/index.css: node_modules dist/release $(SASS)
 # Target that checks the code for style/formating issues.
 format: node_modules
 	@echo "Running style checks..."
-	@npx prettier --check .
+	@npx @biomejs/biome format ./src
 
 # Target that lints the code for errors.
 lint: node_modules
 	@echo "Running linter..."
-	@npx eslint ./src
+	@npx @biomejs/biome lint ./src
 
 # Target to run all unit tests.
 test: node_modules
